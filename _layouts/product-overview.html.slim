@@ -31,6 +31,13 @@ h2#overview Overview
 
   .large-11.columns.product-video
     = video_player(video(page.product.intro_video)) if page.product.intro_video
+    - if page.product.intro_youtube
+      = page.product.intro_youtube
+
+- if page._special_table
+.row#table-features
+  .large-24.columns
+    = page._special_table
 
 br
 .row#product-features
