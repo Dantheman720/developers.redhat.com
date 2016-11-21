@@ -1,0 +1,19 @@
+uuid: b3ca886e-b73a-4eab-b919-ec296d46dfff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_more_details
+    - node.type.events
+id: node.events.field_more_details
+field_name: field_more_details
+entity_type: node
+bundle: events
+label: 'Event URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

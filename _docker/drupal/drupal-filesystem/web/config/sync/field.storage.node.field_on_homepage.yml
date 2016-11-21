@@ -1,0 +1,27 @@
+uuid: d22791a9-3a18-48fd-ad35-f79f5d49d94e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_on_homepage
+field_name: field_on_homepage
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'TRUE'
+      label: 'TRUE'
+    -
+      value: 'FALSE'
+      label: 'FALSE'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

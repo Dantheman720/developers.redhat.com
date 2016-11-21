@@ -1,0 +1,51 @@
+uuid: 2fff953c-a8a8-4f84-bb36-289f470f3f0d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_event_image
+field_name: field_event_image
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: default
+      label: default
+    -
+      value: vjbug_generic
+      label: vjbug_generic
+    -
+      value: javaone_generic
+      label: javaone_generic
+    -
+      value: devoxx_generic
+      label: devoxx_generic
+    -
+      value: devnation_generic
+      label: devnation_generic
+    -
+      value: jbug_generic
+      label: jbug_generic
+    -
+      value: devoxx4kids_generic
+      label: devoxx4kids_generic
+    -
+      value: openshiftroadshow
+      label: openshiftroadshow
+    -
+      value: judcon2016brno
+      label: judcon2016brno
+    -
+      value: build2016_generic
+      label: build2016_generic
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
