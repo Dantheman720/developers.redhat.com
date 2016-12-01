@@ -59,7 +59,7 @@ services:
     expose:
       - "3306"
     ports:
-      - "3306"
+      - "3306:3306"
     volumes_from:
       - drupal_data
 
@@ -156,10 +156,14 @@ services:
    ports:
     - "5900"
 
+  selhub:
+    image: selenium/hub
+
 #
 # Volumes
 #
 volumes:
  export:
   driver: local
+
 
