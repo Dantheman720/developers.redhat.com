@@ -13,34 +13,34 @@ settings:
   allowed_values:
     -
       value: default
-      label: default
+      label: Default
     -
       value: vjbug_generic
-      label: vjbug_generic
+      label: vJBug
     -
       value: javaone_generic
-      label: javaone_generic
+      label: Javaone
     -
       value: devoxx_generic
-      label: devoxx_generic
+      label: Devoxx
     -
       value: devnation_generic
-      label: devnation_generic
+      label: devNation
     -
       value: jbug_generic
-      label: jbug_generic
+      label: JBug
     -
       value: devoxx4kids_generic
-      label: devoxx4kids_generic
+      label: Devoxx4kids
     -
       value: openshiftroadshow
-      label: openshiftroadshow
+      label: 'OpenShift Roadshow'
     -
       value: judcon2016brno
-      label: judcon2016brno
+      label: 'Judcon 2016 Brno'
     -
       value: build2016_generic
-      label: build2016_generic
+      label: 'Build 2016'
   allowed_values_function: ''
 module: options
 locked: false

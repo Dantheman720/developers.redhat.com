@@ -13,25 +13,25 @@ settings:
   allowed_values:
     -
       value: containers
-      label: containers
+      label: Containers
     -
       value: devops
-      label: devops
+      label: DevOps
     -
       value: dotnet
-      label: dotnet
+      label: .NET
     -
       value: enterprise-java
-      label: enterprise-java
+      label: 'Enterprise Java'
     -
       value: iot
-      label: iot
+      label: IoT
     -
       value: mobile
-      label: mobile
+      label: Mobile
     -
       value: web-and-api-development
-      label: web-and-api-development
+      label: 'Web and API Development'
   allowed_values_function: ''
 module: options
 locked: false

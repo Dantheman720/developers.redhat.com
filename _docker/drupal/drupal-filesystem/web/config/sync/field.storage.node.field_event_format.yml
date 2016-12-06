@@ -13,16 +13,16 @@ settings:
   allowed_values:
     -
       value: webinar
-      label: webinar
+      label: Webinar
     -
       value: workshop
-      label: workshop
+      label: Workshop
     -
       value: conference
-      label: conference
+      label: Conference
     -
       value: usergroup
-      label: usergroup
+      label: Usergroup
   allowed_values_function: ''
 module: options
 locked: false
