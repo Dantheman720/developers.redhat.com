@@ -2,7 +2,7 @@
 /* global RHDPSearchApp */
 // Test rhdp-search-app component
 
-describe('Given Search Application', function() {
+describe('Given Downloads Application', function() {
     var wc;
 
     beforeEach(function() {
