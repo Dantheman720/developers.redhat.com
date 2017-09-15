@@ -1,14 +1,60 @@
 class RhdpDownloadsPopularProduct extends HTMLElement {
+
+    private _name;
+    private _productId;
+    private _dataFallbackUrl;
+    private _downloadUrl;
+
+
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        if (this._name === value) return;
+        this._name = value;
+    }
+
+    get productId() {
+
+        return this._productId;
+
+    }
+
+    set productId(value) {
+        if (this.productId === value) return;
+
+        this._productId = value;
+    }
+
+    get dataFallbackUrl() {
+        return this._dataFallbackUrl;
+    }
+
+    set dataFallbackUrl(value) {
+        if (this.dataFallbackUrl === value) return;
+        this._dataFallbackUrl = value;
+    }
+
+    get downloadUrl() {
+        return this._downloadUrl;
+    }
+
+    set downloadUrl(value) {
+        if (this.downloadUrl === value) return;
+        this._downloadUrl = value;
+    }
+
     constructor() {
         super();
     }
 
-    template = (strings, name,) => {
+    template = (strings, name, id, dataFallbackUrl, url) => {
         return `
         <div class="large-6 column">
             <div class="popular-download-box">
-                <h4>Red Hat Enterprise Linux</h4>
-                <a class="button heavy-cta" data-download-id="rhel" data-fallback-url="https://access.redhat.com/downloads/content/69/" href="https://developers.redhat.com/download-manager/content/origin/files/sha256/43/431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000/rhel-server-7.4-x86_64-dvd.iso"><i class="fa fa-download"></i> Download</a>
+                <h4>${name}</h4>
+                <a class="button heavy-cta" data-download-id="${id}" data-fallback-url="${dataFallbackUrl}" href="${url}"><i class="fa fa-download"></i> Download</a>
             </div>
         </div>`; };
 
