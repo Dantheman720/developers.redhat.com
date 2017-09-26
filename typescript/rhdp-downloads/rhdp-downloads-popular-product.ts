@@ -1,4 +1,4 @@
-class RhdpDownloadsPopularProduct extends HTMLElement {
+class RHDPDownloadsPopularProduct extends HTMLElement {
 
     private _name;
     private _productId;

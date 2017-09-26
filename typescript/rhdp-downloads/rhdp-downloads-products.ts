@@ -46,7 +46,7 @@ class RHDPDownloadsProducts extends HTMLElement {
                     //product.downloadLink = item.featuredArtifact.url
                     //if product.version !== 'none'
                         //product.version = item.featuredArtifact.versionName
-        this._products = {"products":[{"productName":"Red Hat JBoss Data Virtualization","groupHeading":"INTEGRATION AND AUTOMATION","productCode":"datavirt","featured":false,"downloadLink":"https://developers.stage.redhat.com/download-manager/content/origin/files/sha256/b4/b466affbcc1740bf2c7c73b60bb6ffa7e1ec844fc08447224ab15aa3bcee3949/jboss-dv-6.3.0-1-installer.jar","description":"A tool that brings operational and analytical insight from data dispersed in various business units, apps, and technologies.","version":"6.3.0","learnMoreLink":"https://developers.redhat.com/products/datavirt/overview/"}]};
+        this.products = {"products":[{"productName":"Red Hat JBoss Data Virtualization","groupHeading":"INTEGRATION AND AUTOMATION","productCode":"datavirt","featured":false,"downloadLink":"https://developers.stage.redhat.com/download-manager/content/origin/files/sha256/b4/b466affbcc1740bf2c7c73b60bb6ffa7e1ec844fc08447224ab15aa3bcee3949/jboss-dv-6.3.0-1-installer.jar","description":"A tool that brings operational and analytical insight from data dispersed in various business units, apps, and technologies.","version":"6.3.0","learnMoreLink":"https://developers.redhat.com/products/datavirt/overview/"}]};
         this.setAttribute('products',this._products);
 
     }
