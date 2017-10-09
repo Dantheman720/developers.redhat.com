@@ -7,6 +7,7 @@ class RHDPDownloadsApp extends HTMLElement {
     _url;
 
     popularProduct = new RHDPDownloadsPopularProducts();
+    products = new RHDPDownloadsProducts();
 
     get url() {
         return this._url;
@@ -46,19 +47,19 @@ class RHDPDownloadsApp extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = this.template;
-        this.querySelector('.row .large-12').appendChild(this.popularProduct);
+        this.querySelector('.most-popular-downloads .row').appendChild(this.popularProduct);
         this.addGroupHeadings()
 
     }
 
     addGroupHeadings(){
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('developer_tools','DEVELOPER TOOLS'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('infrastructure','INFRASTRUCTURE'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('integration_and_automation','INTEGRATION AND AUTOMATION'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('mobile','MOBILE'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('cloud','CLOUD'));
-        this.querySelector('#downloads').appendChild(new RHDPDownloadsAll('runtimes','RUNTIMES'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools','DEVELOPER TOOLS'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure','INFRASTRUCTURE'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation','INTEGRATION AND AUTOMATION'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile','MOBILE'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud','CLOUD'));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes','RUNTIMES'));
 
     }
 

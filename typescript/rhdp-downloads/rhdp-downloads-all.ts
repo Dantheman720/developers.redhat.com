@@ -16,6 +16,8 @@ class RHDPDownloadsAll extends HTMLElement {
 
     set id(value) {
         this._id = value;
+        this.setAttribute('id', this._id);
+
     }
 
     get heading() {
@@ -24,6 +26,8 @@ class RHDPDownloadsAll extends HTMLElement {
 
     set heading(value) {
         this._heading = value;
+        this.setAttribute('heading', this._heading);
+
     }
 
     template = (strings, id, heading) => {
@@ -35,15 +39,32 @@ class RHDPDownloadsAll extends HTMLElement {
                 `; };
 
     connectedCallback() {
-
+        this.innerHTML = this.template`${this.id}${this.heading}`;
         this.getProductsWithTargetHeading(new RHDPDownloadsProducts())
     }
 
-    getProductsWithTargetHeading(productList){
+    getProductsWithTargetHeading(productList) {
+        if (productList.products) {
+            let products = productList.products.products;
+            let len = products.length;
 
+            for (let i = 0; i < len; i++) {
+                if (products[i].groupHeading === this.heading) {
+                    let item = new RHDPDownloadsAllItem();
+                    item.name = products[i].productName;
+                    item.productId = products[i].productCode ? products[i].productCode : "";
+                    item.dataFallbackUrl = products[i].dataFallbackUrl;
+                    item.downloadUrl = products[i].downloadLink;
+                    item.description = products[i].description;
+                    item.learnMore = products[i].learnMoreLink;
+                    item.version = products[i].version;
+                    this.appendChild(item);
+                }
+            }
+        }
     }
     static get observedAttributes() {
-        return ['result'];
+        return ['id', 'heading'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {

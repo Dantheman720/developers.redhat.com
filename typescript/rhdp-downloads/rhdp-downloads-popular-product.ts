@@ -5,7 +5,6 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
     private _dataFallbackUrl;
     private _downloadUrl;
 
-
     get name() {
         return this._name;
     }
@@ -13,6 +12,7 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
     set name(value) {
         if (this._name === value) return;
         this._name = value;
+        this.setAttribute('name', this.name)
     }
 
     get productId() {
@@ -23,8 +23,9 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
 
     set productId(value) {
         if (this.productId === value) return;
-
         this._productId = value;
+        this.setAttribute('productid', this.productId)
+
     }
 
     get dataFallbackUrl() {
@@ -34,6 +35,7 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
     set dataFallbackUrl(value) {
         if (this.dataFallbackUrl === value) return;
         this._dataFallbackUrl = value;
+        this.setAttribute('datafallbackurl', this.dataFallbackUrl)
     }
 
     get downloadUrl() {
@@ -43,6 +45,7 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
     set downloadUrl(value) {
         if (this.downloadUrl === value) return;
         this._downloadUrl = value;
+        this.setAttribute('downloadurl', this.downloadUrl)
     }
 
     constructor() {
@@ -56,14 +59,15 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
                 <h4>${name}</h4>
                 <a class="button heavy-cta" data-download-id="${id}" data-fallback-url="${dataFallbackUrl}" href="${url}"><i class="fa fa-download"></i> Download</a>
             </div>
-        </div>`; };
+        </div>`;
+    };
 
     connectedCallback() {
-
+        this.innerHTML = this.template`${this.name}${this.productId}${this.dataFallbackUrl}${this.downloadUrl}`;
     }
 
     static get observedAttributes() {
-        return ['result'];
+        return ['name', 'productid', 'datafallbackurl', 'downloadurl'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {

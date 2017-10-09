@@ -11,7 +11,10 @@ class RHDPDownloadsPopularProducts extends HTMLElement {
     }
 
     set productList(value) {
+        if (this._productList === value) return;
         this._productList = value;
+        this.setAttribute('productlist', this.productList)
+
     }
 
     addProduct(product){
@@ -22,8 +25,6 @@ class RHDPDownloadsPopularProducts extends HTMLElement {
         productNode.dataFallbackUrl = product.dataFallbackURL;
         productNode.downloadUrl = product.downloadLink;
         this.appendChild(productNode);
-
-
     }
 
     renderProductList(productList){
@@ -34,7 +35,7 @@ class RHDPDownloadsPopularProducts extends HTMLElement {
             let products = this.productList.products;
             let len = products.length;
             for (let i = 0; i < len; i++){
-                if(products.isPopular){
+                if(products[i].featured){
                     this.addProduct(products[i])
                 }
             }
