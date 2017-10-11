@@ -29,7 +29,7 @@
       "dataFallbackUrl" : "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
       "downloadLink": "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
       "description" : "Apache httpd, Tomcat, etc. to provide a single solution for large-scale websites and light-weight Java web applications.",
-      "version" : "none",
+      "version" : "",
       "learnMoreLink" : "https://developers.redhat.com/products/webserver/overview/"
     },
     {
@@ -39,7 +39,7 @@
       "dataFallbackUrl" : "https://access.redhat.com/downloads",
       "downloadLink": "https://access.redhat.com/downloads",
       "description" : "Red Hat Application Migration Toolkit is an assembly of open source tools that enables large-scale application migrations and modernizations. The tooling consists of multiple individual components that provide support for each phase of a migration process.",
-      "version" : "none",
+      "version" : "",
       "learnMoreLink" : "https://developers.redhat.com/products/rhamt/overview/"
     },
     {
@@ -148,7 +148,7 @@
       "dataFallbackUrl" : "https://access.redhat.com/downloads/content/316/",
       "downloadLink": "https://access.redhat.com/downloads/content/316/",
       "description" : "Develop and deploy mobile apps in an agile and flexible manner.",
-      "version" : "none",
+      "version" : "",
       "learnMoreLink" : "https://developers.redhat.com/products/mobileplatform/overview/"
     },
     {
@@ -158,7 +158,7 @@
       "dataFallbackUrl" : "https://access.redhat.com/downloads/content/290/",
       "downloadLink": "https://access.redhat.com/downloads/content/290/",
       "description" : "An open, hybrid Platform-as-a-Service (PaaS) to quickly develop, host, scale, and deliver apps in the cloud.",
-      "version" : "none",
+      "version" : "",
       "learnMoreLink" : "https://developers.redhat.com/products/openshift/overview/"
     },
     {

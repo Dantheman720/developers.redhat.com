@@ -3,11 +3,13 @@ class RHDPDownloadsAll extends HTMLElement {
 
     private _id;
     private _heading;
+    private _products;
 
-    constructor(id, heading) {
+    constructor(id, heading, products) {
         super();
         this.id = id;
         this.heading = heading;
+        this._products = products;
     }
 
     get id() {
@@ -40,7 +42,7 @@ class RHDPDownloadsAll extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = this.template`${this.id}${this.heading}`;
-        this.getProductsWithTargetHeading(new RHDPDownloadsProducts())
+        this.getProductsWithTargetHeading(this._products)
     }
 
     getProductsWithTargetHeading(productList) {
@@ -53,11 +55,11 @@ class RHDPDownloadsAll extends HTMLElement {
                     let item = new RHDPDownloadsAllItem();
                     item.name = products[i].productName;
                     item.productId = products[i].productCode ? products[i].productCode : "";
-                    item.dataFallbackUrl = products[i].dataFallbackUrl;
-                    item.downloadUrl = products[i].downloadLink;
-                    item.description = products[i].description;
-                    item.learnMore = products[i].learnMoreLink;
-                    item.version = products[i].version;
+                    item.dataFallbackUrl = products[i].dataFallbackUrl ? products[i].dataFallbackUrl : "";
+                    item.downloadUrl = products[i].downloadLink ? products[i].downloadLink : "";
+                    item.description = products[i].description ? products[i].description : "";
+                    item.learnMore = products[i].learnMoreLink ? products[i].learnMoreLink : "";
+                    item.version = products[i].version ? products[i].version : "";
                     this.appendChild(item);
                 }
             }

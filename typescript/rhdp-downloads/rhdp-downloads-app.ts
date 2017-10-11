@@ -3,8 +3,8 @@ class RHDPDownloadsApp extends HTMLElement {
         super();
     }
 
-    //_url = 'http://dcp.stage.jboss.org/v2/rest/search';
-    _url;
+    _url = 'https://developers.redhat.com/download-manager/rest/available/rhel,eap,devstudio,fuse,datagrid,eap,webserver,cdk,devsuite,amq,brms,bpmsuite,datavirt,mobileplatform,openshift,openjdk,dotnet?nv=1';
+    // _url;
 
     popularProduct = new RHDPDownloadsPopularProducts();
     products = new RHDPDownloadsProducts();
@@ -48,19 +48,28 @@ class RHDPDownloadsApp extends HTMLElement {
     connectedCallback() {
         this.innerHTML = this.template;
         this.querySelector('.most-popular-downloads .row').appendChild(this.popularProduct);
-        this.addGroupHeadings()
+        this.setProductsDownloadData(this.url);
 
     }
 
-    addGroupHeadings(){
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools','DEVELOPER TOOLS'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure','INFRASTRUCTURE'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation','INTEGRATION AND AUTOMATION'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile','MOBILE'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud','CLOUD'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes','RUNTIMES'));
+    addGroupHeadings(productList){
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools','DEVELOPER TOOLS', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure','INFRASTRUCTURE', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation','INTEGRATION AND AUTOMATION', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile','MOBILE', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud','CLOUD', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes','RUNTIMES', productList));
 
+    }
+
+    setProductsDownloadData(url) {
+        fetch(url, {headers : 'application/json'})
+            .then((resp) => resp.json())
+            .then((data) => {
+                this.products.data = data;
+                this.addGroupHeadings(this.products);
+            });
     }
 
     static get observedAttributes() { 

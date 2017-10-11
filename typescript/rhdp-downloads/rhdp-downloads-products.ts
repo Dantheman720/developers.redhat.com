@@ -28,7 +28,7 @@ class RHDPDownloadsProducts extends HTMLElement {
             "dataFallbackUrl": "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
             "downloadLink": "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
             "description": "Apache httpd, Tomcat, etc. to provide a single solution for large-scale websites and light-weight Java web applications.",
-            "version": "none",
+            "version": "",
             "learnMoreLink": "https://developers.redhat.com/products/webserver/overview/"
         }, {
             "productName": "Red Hat Application Migration Toolkit",
@@ -37,7 +37,7 @@ class RHDPDownloadsProducts extends HTMLElement {
             "dataFallbackUrl": "https://access.redhat.com/downloads",
             "downloadLink": "https://access.redhat.com/downloads",
             "description": "Red Hat Application Migration Toolkit is an assembly of open source tools that enables large-scale application migrations and modernizations. The tooling consists of multiple individual components that provide support for each phase of a migration process.",
-            "version": "none",
+            "version": "",
             "learnMoreLink": "https://developers.redhat.com/products/rhamt/overview/"
         }, {
             "productName": "Red Hat Container Development Kit",
@@ -136,7 +136,7 @@ class RHDPDownloadsProducts extends HTMLElement {
             "dataFallbackUrl": "https://access.redhat.com/downloads/content/316/",
             "downloadLink": "https://access.redhat.com/downloads/content/316/",
             "description": "Develop and deploy mobile apps in an agile and flexible manner.",
-            "version": "none",
+            "version": "",
             "learnMoreLink": "https://developers.redhat.com/products/mobileplatform/overview/"
         }, {
             "productName": "Red Hat OpenShift Container Platform",
@@ -145,7 +145,7 @@ class RHDPDownloadsProducts extends HTMLElement {
             "dataFallbackUrl": "https://access.redhat.com/downloads/content/290/",
             "downloadLink": "https://access.redhat.com/downloads/content/290/",
             "description": "An open, hybrid Platform-as-a-Service (PaaS) to quickly develop, host, scale, and deliver apps in the cloud.",
-            "version": "none",
+            "version": "",
             "learnMoreLink": "https://developers.redhat.com/products/openshift/overview/"
         }, {
             "productName": "OpenJDK",
@@ -173,6 +173,10 @@ class RHDPDownloadsProducts extends HTMLElement {
     // private _products;
 
     private _data;
+
+    constructor() {
+        super();
+    }
 
     get category() {
         return this._category;
@@ -219,25 +223,14 @@ class RHDPDownloadsProducts extends HTMLElement {
                         this.products.products[i]['downloadLink'] = data['featuredArtifact']['url'];
                         this.products.products[i]['version'] = data['featuredArtifact']['versionName'];
 
-                        tempProductList['products'].push(product);
                     }
                 }
-
+                tempProductList['products'].push(product);
             }
         }
-        return this.products = tempProductList;
+        this.products = tempProductList;
     }
 
-    getProductsWithHeading(heading) {
-        //if(products)
-        //var productCategoryList;
-        //foreach product in products
-        //if product.groupHeading == heading
-        //productCategoryList.append(product)
-        //return productCateogryList;
-
-
-    }
 
 
 }

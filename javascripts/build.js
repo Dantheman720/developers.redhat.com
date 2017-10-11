@@ -788,13 +788,14 @@ var RHDPDownloadsAllItem = (function (_super) {
 }(HTMLElement));
 var RHDPDownloadsAll = (function (_super) {
     __extends(RHDPDownloadsAll, _super);
-    function RHDPDownloadsAll(id, heading) {
+    function RHDPDownloadsAll(id, heading, products) {
         var _this = _super.call(this) || this;
         _this.template = function (strings, id, heading) {
             return "<div class=\"download-list\">\n                    <div class=\"large-24 category-label\" id=\"" + id + "\">\n                        <h4>" + heading + "</h4>\n                    </div>\n                </div>\n                ";
         };
         _this.id = id;
         _this.heading = heading;
+        _this._products = products;
         return _this;
     }
     Object.defineProperty(RHDPDownloadsAll.prototype, "id", {
@@ -821,7 +822,7 @@ var RHDPDownloadsAll = (function (_super) {
     });
     RHDPDownloadsAll.prototype.connectedCallback = function () {
         this.innerHTML = (_a = ["", "", ""], _a.raw = ["", "", ""], this.template(_a, this.id, this.heading));
-        this.getProductsWithTargetHeading(new RHDPDownloadsProducts());
+        this.getProductsWithTargetHeading(this._products);
         var _a;
     };
     RHDPDownloadsAll.prototype.getProductsWithTargetHeading = function (productList) {
@@ -833,11 +834,11 @@ var RHDPDownloadsAll = (function (_super) {
                     var item = new RHDPDownloadsAllItem();
                     item.name = products[i].productName;
                     item.productId = products[i].productCode ? products[i].productCode : "";
-                    item.dataFallbackUrl = products[i].dataFallbackUrl;
-                    item.downloadUrl = products[i].downloadLink;
-                    item.description = products[i].description;
-                    item.learnMore = products[i].learnMoreLink;
-                    item.version = products[i].version;
+                    item.dataFallbackUrl = products[i].dataFallbackUrl ? products[i].dataFallbackUrl : "";
+                    item.downloadUrl = products[i].downloadLink ? products[i].downloadLink : "";
+                    item.description = products[i].description ? products[i].description : "";
+                    item.learnMore = products[i].learnMoreLink ? products[i].learnMoreLink : "";
+                    item.version = products[i].version ? products[i].version : "";
                     this.appendChild(item);
                 }
             }
@@ -859,6 +860,8 @@ var RHDPDownloadsApp = (function (_super) {
     __extends(RHDPDownloadsApp, _super);
     function RHDPDownloadsApp() {
         var _this = _super.call(this) || this;
+        _this._url = 'https://developers.redhat.com/download-manager/rest/available/rhel,eap,devstudio,fuse,datagrid,eap,webserver,cdk,devsuite,amq,brms,bpmsuite,datavirt,mobileplatform,openshift,openjdk,dotnet?nv=1';
+        // _url;
         _this.popularProduct = new RHDPDownloadsPopularProducts();
         _this.products = new RHDPDownloadsProducts();
         _this.template = "<div class=\"hero hero-wide hero-downloads\">\n                    <div class=\"row\">\n                        <div class=\"large-12 medium-24 columns\" id=\"downloads\">\n                            <h2>Downloads</h2>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"most-popular-downloads\">\n                    <div class=\"row\">\n                        <div class=\"large-24 column\">\n                            <h3>Most Popular</h3>\n                        </div>\n                    </div>\n                \n                    <div class=\"row\">\n                    </div>\n                </div>\n                <div class=\"row\" id=\"downloads\">\n                    <div class=\"large-24 columns\">\n                        <h3 class=\"downloads-header\">All Downloads</h3>\n                    </div>\n                </div>";
@@ -880,16 +883,25 @@ var RHDPDownloadsApp = (function (_super) {
     RHDPDownloadsApp.prototype.connectedCallback = function () {
         this.innerHTML = this.template;
         this.querySelector('.most-popular-downloads .row').appendChild(this.popularProduct);
-        this.addGroupHeadings();
+        this.setProductsDownloadData(this.url);
     };
-    RHDPDownloadsApp.prototype.addGroupHeadings = function () {
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management', 'ACCELERATED DEVELOPMENT AND MANAGEMENT'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools', 'DEVELOPER TOOLS'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure', 'INFRASTRUCTURE'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation', 'INTEGRATION AND AUTOMATION'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile', 'MOBILE'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud', 'CLOUD'));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes', 'RUNTIMES'));
+    RHDPDownloadsApp.prototype.addGroupHeadings = function (productList) {
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management', 'ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools', 'DEVELOPER TOOLS', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure', 'INFRASTRUCTURE', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation', 'INTEGRATION AND AUTOMATION', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile', 'MOBILE', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud', 'CLOUD', productList));
+        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes', 'RUNTIMES', productList));
+    };
+    RHDPDownloadsApp.prototype.setProductsDownloadData = function (url) {
+        var _this = this;
+        fetch(url, { headers: 'application/json' })
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) {
+            _this.products.data = data;
+            _this.addGroupHeadings(_this.products);
+        });
     };
     Object.defineProperty(RHDPDownloadsApp, "observedAttributes", {
         get: function () {
@@ -1125,7 +1137,7 @@ var RHDPDownloadsProduct = (function (_super) {
 var RHDPDownloadsProducts = (function (_super) {
     __extends(RHDPDownloadsProducts, _super);
     function RHDPDownloadsProducts() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
         _this._products = {
             "products": [{
                     "productName": "Red Hat JBoss Data Grid",
@@ -1154,7 +1166,7 @@ var RHDPDownloadsProducts = (function (_super) {
                     "dataFallbackUrl": "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
                     "downloadLink": "https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes",
                     "description": "Apache httpd, Tomcat, etc. to provide a single solution for large-scale websites and light-weight Java web applications.",
-                    "version": "none",
+                    "version": "",
                     "learnMoreLink": "https://developers.redhat.com/products/webserver/overview/"
                 }, {
                     "productName": "Red Hat Application Migration Toolkit",
@@ -1163,7 +1175,7 @@ var RHDPDownloadsProducts = (function (_super) {
                     "dataFallbackUrl": "https://access.redhat.com/downloads",
                     "downloadLink": "https://access.redhat.com/downloads",
                     "description": "Red Hat Application Migration Toolkit is an assembly of open source tools that enables large-scale application migrations and modernizations. The tooling consists of multiple individual components that provide support for each phase of a migration process.",
-                    "version": "none",
+                    "version": "",
                     "learnMoreLink": "https://developers.redhat.com/products/rhamt/overview/"
                 }, {
                     "productName": "Red Hat Container Development Kit",
@@ -1262,7 +1274,7 @@ var RHDPDownloadsProducts = (function (_super) {
                     "dataFallbackUrl": "https://access.redhat.com/downloads/content/316/",
                     "downloadLink": "https://access.redhat.com/downloads/content/316/",
                     "description": "Develop and deploy mobile apps in an agile and flexible manner.",
-                    "version": "none",
+                    "version": "",
                     "learnMoreLink": "https://developers.redhat.com/products/mobileplatform/overview/"
                 }, {
                     "productName": "Red Hat OpenShift Container Platform",
@@ -1271,7 +1283,7 @@ var RHDPDownloadsProducts = (function (_super) {
                     "dataFallbackUrl": "https://access.redhat.com/downloads/content/290/",
                     "downloadLink": "https://access.redhat.com/downloads/content/290/",
                     "description": "An open, hybrid Platform-as-a-Service (PaaS) to quickly develop, host, scale, and deliver apps in the cloud.",
-                    "version": "none",
+                    "version": "",
                     "learnMoreLink": "https://developers.redhat.com/products/openshift/overview/"
                 }, {
                     "productName": "OpenJDK",
@@ -1348,20 +1360,12 @@ var RHDPDownloadsProducts = (function (_super) {
                     if (data['productCode'] == product['productCode']) {
                         this.products.products[i]['downloadLink'] = data['featuredArtifact']['url'];
                         this.products.products[i]['version'] = data['featuredArtifact']['versionName'];
-                        tempProductList['products'].push(product);
                     }
                 }
+                tempProductList['products'].push(product);
             }
         }
-        return this.products = tempProductList;
-    };
-    RHDPDownloadsProducts.prototype.getProductsWithHeading = function (heading) {
-        //if(products)
-        //var productCategoryList;
-        //foreach product in products
-        //if product.groupHeading == heading
-        //productCategoryList.append(product)
-        //return productCateogryList;
+        this.products = tempProductList;
     };
     return RHDPDownloadsProducts;
 }(HTMLElement));
