@@ -6,7 +6,7 @@ describe('Given Downloads Application', function() {
     var wc;
 
     beforeEach(function() {
-        document.body.insertBefore(document.createElement('rhdp-search-app'), document.body.firstChild);
+        document.body.insertBefore(document.createElement('rhdp-downloads-app'), document.body.firstChild);
         wc = document.body.firstChild;
     });
 
@@ -15,6 +15,6 @@ describe('Given Downloads Application', function() {
     });
 
     it('should be true', function() {
-        expect(wc.innerText).toEqual('');
+        expect(wc.innerText.length).toBeGreaterThan(0);
     });
 });

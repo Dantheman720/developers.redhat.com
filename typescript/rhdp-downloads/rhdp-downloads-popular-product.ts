@@ -67,7 +67,7 @@ class RHDPDownloadsPopularProduct extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['name', 'productid', 'datafallbackurl', 'downloadurl'];
+        return ['name'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {

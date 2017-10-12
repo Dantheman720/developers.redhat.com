@@ -48,10 +48,6 @@ class RHDPDownloadsPopularProducts extends HTMLElement {
 
     }
 
-    static get observedAttributes() {
-        return ['product-list'];
-    }
-
 
     attributeChangedCallback(name, oldVal, newVal) {
         this[name] = newVal;

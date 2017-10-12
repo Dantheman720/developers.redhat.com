@@ -5,11 +5,8 @@ class RHDPDownloadsAll extends HTMLElement {
     private _heading;
     private _products;
 
-    constructor(id, heading, products) {
+    constructor() {
         super();
-        this.id = id;
-        this.heading = heading;
-        this._products = products;
     }
 
     get id() {
@@ -19,7 +16,6 @@ class RHDPDownloadsAll extends HTMLElement {
     set id(value) {
         this._id = value;
         this.setAttribute('id', this._id);
-
     }
 
     get heading() {
@@ -32,6 +28,14 @@ class RHDPDownloadsAll extends HTMLElement {
 
     }
 
+    get products() {
+        return this._products;
+    }
+
+    set products(value) {
+        this._products = value;
+    }
+
     template = (strings, id, heading) => {
         return `<div class="download-list">
                     <div class="large-24 category-label" id="${id}">
@@ -42,7 +46,7 @@ class RHDPDownloadsAll extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = this.template`${this.id}${this.heading}`;
-        this.getProductsWithTargetHeading(this._products)
+        this.getProductsWithTargetHeading(this.products)
     }
 
     getProductsWithTargetHeading(productList) {
@@ -65,9 +69,9 @@ class RHDPDownloadsAll extends HTMLElement {
             }
         }
     }
-    static get observedAttributes() {
-        return ['id', 'heading'];
-    }
+    // static get observedAttributes() {
+    //     return ['id'];
+    // }
 
     attributeChangedCallback(name, oldVal, newVal) {
         this[name] = newVal;

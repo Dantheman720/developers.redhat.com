@@ -100,7 +100,8 @@ class RHDPDownloadsAllItem extends HTMLElement {
                     <a href="${learnMore}">Learn More</a></div>
             
                 <div class="large-9 center columns">
-                    <p data-download-id-version="${productId}">${version}</p>
+                
+                  ${version ? `<p data-download-id-version="${productId}">Version: ${version}</p>` : `<p data-download-id-version="${productId}"></p>`}  
                 </div>
             
                 <div class="large-5 columns"><a class="button medium-cta blue" data-download-id="${productId}"
@@ -115,7 +116,7 @@ class RHDPDownloadsAllItem extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['name', 'productid', 'datafallbackurl', 'downloadurl', 'description', 'learnmore', 'version'];
+        return ['name'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {

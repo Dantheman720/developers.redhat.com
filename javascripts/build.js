@@ -681,7 +681,7 @@ var RHDPDownloadsAllItem = (function (_super) {
     function RHDPDownloadsAllItem() {
         var _this = _super.call(this) || this;
         _this.template = function (strings, name, productId, dataFallbackUrl, downloadUrl, learnMore, description, version) {
-            return "\n            <div class=\"row\">\n                <hr>\n                <div class=\"large-24 column\">\n                    <h5>" + name + "</h5>\n                </div>\n            \n                <div class=\"large-10 columns\">\n                    <p></p>\n            \n                    <div class=\"paragraph\">\n                        <p>" + description + "</p>\n                    </div>\n                    <a href=\"" + learnMore + "\">Learn More</a></div>\n            \n                <div class=\"large-9 center columns\">\n                    <p data-download-id-version=\"" + productId + "\">" + version + "</p>\n                </div>\n            \n                <div class=\"large-5 columns\"><a class=\"button medium-cta blue\" data-download-id=\"" + productId + "\"\n                                                data-fallback-url=\"" + dataFallbackUrl + "\"\n                                                href=\"" + downloadUrl + "\">Download</a></div>\n            </div>\n";
+            return "\n            <div class=\"row\">\n                <hr>\n                <div class=\"large-24 column\">\n                    <h5>" + name + "</h5>\n                </div>\n            \n                <div class=\"large-10 columns\">\n                    <p></p>\n            \n                    <div class=\"paragraph\">\n                        <p>" + description + "</p>\n                    </div>\n                    <a href=\"" + learnMore + "\">Learn More</a></div>\n            \n                <div class=\"large-9 center columns\">\n                \n                  " + (version ? "<p data-download-id-version=\"" + productId + "\">Version: " + version + "</p>" : "<p data-download-id-version=\"" + productId + "\"></p>") + "  \n                </div>\n            \n                <div class=\"large-5 columns\"><a class=\"button medium-cta blue\" data-download-id=\"" + productId + "\"\n                                                data-fallback-url=\"" + dataFallbackUrl + "\"\n                                                href=\"" + downloadUrl + "\">Download</a></div>\n            </div>\n";
         };
         return _this;
     }
@@ -776,7 +776,7 @@ var RHDPDownloadsAllItem = (function (_super) {
     };
     Object.defineProperty(RHDPDownloadsAllItem, "observedAttributes", {
         get: function () {
-            return ['name', 'productid', 'datafallbackurl', 'downloadurl', 'description', 'learnmore', 'version'];
+            return ['name'];
         },
         enumerable: true,
         configurable: true
@@ -788,14 +788,11 @@ var RHDPDownloadsAllItem = (function (_super) {
 }(HTMLElement));
 var RHDPDownloadsAll = (function (_super) {
     __extends(RHDPDownloadsAll, _super);
-    function RHDPDownloadsAll(id, heading, products) {
+    function RHDPDownloadsAll() {
         var _this = _super.call(this) || this;
         _this.template = function (strings, id, heading) {
             return "<div class=\"download-list\">\n                    <div class=\"large-24 category-label\" id=\"" + id + "\">\n                        <h4>" + heading + "</h4>\n                    </div>\n                </div>\n                ";
         };
-        _this.id = id;
-        _this.heading = heading;
-        _this._products = products;
         return _this;
     }
     Object.defineProperty(RHDPDownloadsAll.prototype, "id", {
@@ -820,9 +817,19 @@ var RHDPDownloadsAll = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(RHDPDownloadsAll.prototype, "products", {
+        get: function () {
+            return this._products;
+        },
+        set: function (value) {
+            this._products = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     RHDPDownloadsAll.prototype.connectedCallback = function () {
         this.innerHTML = (_a = ["", "", ""], _a.raw = ["", "", ""], this.template(_a, this.id, this.heading));
-        this.getProductsWithTargetHeading(this._products);
+        this.getProductsWithTargetHeading(this.products);
         var _a;
     };
     RHDPDownloadsAll.prototype.getProductsWithTargetHeading = function (productList) {
@@ -844,13 +851,9 @@ var RHDPDownloadsAll = (function (_super) {
             }
         }
     };
-    Object.defineProperty(RHDPDownloadsAll, "observedAttributes", {
-        get: function () {
-            return ['id', 'heading'];
-        },
-        enumerable: true,
-        configurable: true
-    });
+    // static get observedAttributes() {
+    //     return ['id'];
+    // }
     RHDPDownloadsAll.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
         this[name] = newVal;
     };
@@ -886,13 +889,20 @@ var RHDPDownloadsApp = (function (_super) {
         this.setProductsDownloadData(this.url);
     };
     RHDPDownloadsApp.prototype.addGroupHeadings = function (productList) {
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management', 'ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools', 'DEVELOPER TOOLS', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure', 'INFRASTRUCTURE', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation', 'INTEGRATION AND AUTOMATION', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile', 'MOBILE', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud', 'CLOUD', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes', 'RUNTIMES', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('accelerated_development_and_management', 'ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('developer_tools', 'DEVELOPER TOOLS', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('infrastructure', 'INFRASTRUCTURE', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('integration_and_automation', 'INTEGRATION AND AUTOMATION', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('mobile', 'MOBILE', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('cloud', 'CLOUD', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('runtimes', 'RUNTIMES', productList));
+    };
+    RHDPDownloadsApp.prototype.downloadsAllFactory = function (id, heading, productList) {
+        var downloads = new RHDPDownloadsAll();
+        downloads.id = id;
+        downloads.heading = heading;
+        downloads.products = productList;
+        return downloads;
     };
     RHDPDownloadsApp.prototype.setProductsDownloadData = function (url) {
         var _this = this;
@@ -982,7 +992,7 @@ var RHDPDownloadsPopularProduct = (function (_super) {
     };
     Object.defineProperty(RHDPDownloadsPopularProduct, "observedAttributes", {
         get: function () {
-            return ['name', 'productid', 'datafallbackurl', 'downloadurl'];
+            return ['name'];
         },
         enumerable: true,
         configurable: true
@@ -1035,104 +1045,10 @@ var RHDPDownloadsPopularProducts = (function (_super) {
     RHDPDownloadsPopularProducts.prototype.connectedCallback = function () {
         this.renderProductList(new RHDPDownloadsProducts());
     };
-    Object.defineProperty(RHDPDownloadsPopularProducts, "observedAttributes", {
-        get: function () {
-            return ['product-list'];
-        },
-        enumerable: true,
-        configurable: true
-    });
     RHDPDownloadsPopularProducts.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
         this[name] = newVal;
     };
     return RHDPDownloadsPopularProducts;
-}(HTMLElement));
-var RHDPDownloadsProduct = (function (_super) {
-    __extends(RHDPDownloadsProduct, _super);
-    function RHDPDownloadsProduct() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "productName", {
-        get: function () {
-            return this._productName;
-        },
-        set: function (value) {
-            this._productName = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "groupHeading", {
-        get: function () {
-            return this._groupHeading;
-        },
-        set: function (value) {
-            this._groupHeading = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "productCode", {
-        get: function () {
-            return this._productCode;
-        },
-        set: function (value) {
-            this._productCode = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "featured", {
-        get: function () {
-            return this._featured;
-        },
-        set: function (value) {
-            this._featured = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "downloadLink", {
-        get: function () {
-            return this._downloadLink;
-        },
-        set: function (value) {
-            this._downloadLink = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "description", {
-        get: function () {
-            return this._description;
-        },
-        set: function (value) {
-            this._description = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "version", {
-        get: function () {
-            return this._version;
-        },
-        set: function (value) {
-            this._version = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPDownloadsProduct.prototype, "learnMoreLink", {
-        get: function () {
-            return this._learnMoreLink;
-        },
-        set: function (value) {
-            this._learnMoreLink = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return RHDPDownloadsProduct;
 }(HTMLElement));
 var RHDPDownloadsProducts = (function (_super) {
     __extends(RHDPDownloadsProducts, _super);
@@ -1375,7 +1291,6 @@ window.addEventListener('WebComponentsReady', function () {
     customElements.define('rhdp-downloads-popular-product', RHDPDownloadsPopularProduct);
     customElements.define('rhdp-downloads-popular-products', RHDPDownloadsPopularProducts);
     customElements.define('rhdp-downloads-products', RHDPDownloadsProducts);
-    customElements.define('rhdp-downloads-product', RHDPDownloadsProduct);
     customElements.define('rhdp-downloads-app', RHDPDownloadsApp);
 });
 var RHDPSearchApp = (function (_super) {

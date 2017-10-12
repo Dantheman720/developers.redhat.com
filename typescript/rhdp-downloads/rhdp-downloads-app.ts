@@ -53,14 +53,23 @@ class RHDPDownloadsApp extends HTMLElement {
     }
 
     addGroupHeadings(productList){
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('developer_tools','DEVELOPER TOOLS', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('infrastructure','INFRASTRUCTURE', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('integration_and_automation','INTEGRATION AND AUTOMATION', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('mobile','MOBILE', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('cloud','CLOUD', productList));
-        this.querySelector('#downloads .large-24').appendChild(new RHDPDownloadsAll('runtimes','RUNTIMES', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('accelerated_development_and_management','ACCELERATED DEVELOPMENT AND MANAGEMENT', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('developer_tools','DEVELOPER TOOLS', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('infrastructure','INFRASTRUCTURE', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('integration_and_automation','INTEGRATION AND AUTOMATION', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('mobile','MOBILE', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('cloud','CLOUD', productList));
+        this.querySelector('#downloads .large-24').appendChild(this.downloadsAllFactory('runtimes','RUNTIMES', productList));
 
+    }
+
+    downloadsAllFactory(id, heading, productList){
+        var downloads = new RHDPDownloadsAll();
+        downloads.id = id;
+        downloads.heading = heading;
+        downloads.products = productList;
+
+        return downloads;
     }
 
     setProductsDownloadData(url) {
