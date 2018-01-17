@@ -9,12 +9,201 @@ class RHDPProjectItem extends HTMLElement {
     private _docsLink : String;
     private _issueTracker : String;
     private _githubLink : String;
+    private _communityLink : String;
+    private _knowledgebaseLink : String;
+    private _userForumLink : String;
+    private _devForumLink : String;
+    private _mailingListLink : String;
+    private _chatLink : String;
+    private _blogLink : String;
+    private _jiraLink : String;
+    private _srcLink : String;
+    private _anonymousLink : String;
+    private _commiterLink : String;
+    private _fisheyeLink : String;
+    private _viewvcLink : String;
+    private _anonymousGitLink : String;
+    private _committerGitLink : String;
+    private _buildLink : String;
+    private _hudsonLink : String;
+
+    get userForumLink(): String {
+        return this._userForumLink;
+    }
+
+    set userForumLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._userForumLink === value) return;
+        this._userForumLink = value;
+    }
+
+    get devForumLink(): String {
+        return this._devForumLink;
+    }
+
+    set devForumLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._devForumLink === value) return;
+        this._devForumLink = value;
+    }
+
+    get mailingListLink(): String {
+        return this._mailingListLink;
+    }
+
+    set mailingListLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._mailingListLink === value) return;
+        this._mailingListLink = value;
+    }
+
+    get chatLink(): String {
+        return this._chatLink;
+    }
+
+    set chatLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._chatLink === value) return;
+        this._chatLink = value;
+    }
+
+    get blogLink(): String {
+        return this._blogLink;
+    }
+
+    set blogLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._blogLink === value) return;
+        this._blogLink = value;
+    }
+
+    get jiraLink(): String {
+        return this._jiraLink;
+    }
+
+    set jiraLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._jiraLink === value) return;
+        this._jiraLink = value;
+    }
+
+    get srcLink(): String {
+        return this._srcLink;
+    }
+
+    set srcLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._srcLink === value) return;
+        this._srcLink = value;
+    }
+
+    get anonymousLink(): String {
+        return this._anonymousLink;
+    }
+
+    set anonymousLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._anonymousLink === value) return;
+        this._anonymousLink = value;
+    }
+
+    get commiterLink(): String {
+        return this._commiterLink;
+    }
+
+    set commiterLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._commiterLink === value) return;
+        this._commiterLink = value;
+    }
+
+    get fisheyeLink(): String {
+        return this._fisheyeLink;
+    }
+
+    set fisheyeLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._fisheyeLink === value) return;
+        this._fisheyeLink = value;
+    }
+
+    get viewvcLink(): String {
+        return this._viewvcLink;
+    }
+
+    set viewvcLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._viewvcLink === value) return;
+        this._viewvcLink = value;
+    }
+
+    get anonymousGitLink(): String {
+        return this._anonymousGitLink;
+    }
+
+    set anonymousGitLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._anonymousGitLink === value) return;
+        this._anonymousGitLink = value;
+    }
+
+    get committerGitLink(): String {
+        return this._committerGitLink;
+    }
+
+    set committerGitLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._committerGitLink === value) return;
+        this._committerGitLink = value;
+    }
+
+    get buildLink(): String {
+        return this._buildLink;
+    }
+
+    set buildLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._buildLink === value) return;
+        this._buildLink = value;
+    }
+
+    get hudsonLink(): String {
+        return this._hudsonLink;
+    }
+
+    set hudsonLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._hudsonLink === value) return;
+        this._hudsonLink = value;
+    }
+
+    get knowledgebaseLink(): String {
+        return this._knowledgebaseLink;
+    }
+
+    set knowledgebaseLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._knowledgebaseLink === value) return;
+        this._knowledgebaseLink = value;
+    }
+
+    get communityLink(): String {
+        return this._communityLink;
+    }
+
+    set communityLink(value) {
+        value = this.getCorrectUrl(value);
+        if (this._communityLink === value) return;
+        this._communityLink = value;
+    }
 
     get imageUrl(): String {
         return this._imageUrl;
     }
 
-    set imageUrl(value: String) {
+    set imageUrl(value) {
+        value = this.getCorrectUrl(value);
+
         if (this._imageUrl === value) return;
         this._imageUrl = value;
 
@@ -24,7 +213,7 @@ class RHDPProjectItem extends HTMLElement {
         return this._projectName;
     }
 
-    set projectName(value: String) {
+    set projectName(value) {
         if (this._projectName === value) return;
         this._projectName = value;
     }
@@ -33,7 +222,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._downloadsLink;
     }
 
-    set downloadsLink(value: String) {
+    set downloadsLink(value) {
+        this.getCorrectUrl(value);
         if (this._downloadsLink === value) return;
         this._downloadsLink = value;
     }
@@ -42,7 +232,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._sys_url_view;
     }
 
-    set sys_url_view(value: String) {
+    set sys_url_view(value) {
+        value = this.getCorrectUrl(value);
         if (this._sys_url_view === value) return;
         this._sys_url_view = value;
     }
@@ -51,7 +242,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._twitterLink;
     }
 
-    set twitterLink(value: String) {
+    set twitterLink(value) {
+        value = this.getCorrectUrl(value);
         if (this._twitterLink === value) return;
         this._twitterLink = value;
     }
@@ -60,7 +252,7 @@ class RHDPProjectItem extends HTMLElement {
         return this._descriptions;
     }
 
-    set descriptions(value: String) {
+    set descriptions(value) {
         if (this._descriptions === value) return;
         this._descriptions = value;
     }
@@ -69,7 +261,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._docsLink;
     }
 
-    set docsLink(value: String) {
+    set docsLink(value) {
+        value = this.getCorrectUrl(value);
         if (this._docsLink === value) return;
         this._docsLink = value;
     }
@@ -78,7 +271,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._issueTracker;
     }
 
-    set issueTracker(value: String) {
+    set issueTracker(value) {
+        value = this.getCorrectUrl(value);
         if (this._issueTracker === value) return;
         this._issueTracker = value;
     }
@@ -87,7 +281,8 @@ class RHDPProjectItem extends HTMLElement {
         return this._githubLink;
     }
 
-    set githubLink(value: String) {
+    set githubLink(value) {
+        value = this.getCorrectUrl(value);
         if (this._githubLink === value) return;
         this._githubLink = value;
     }
@@ -97,6 +292,7 @@ class RHDPProjectItem extends HTMLElement {
     }
 
     getCorrectUrl(url) {
+        if (url == null) return;
         if (url.constructor === Array && url.length > 0) {
             url = url[0];
         }
@@ -111,6 +307,13 @@ class RHDPProjectItem extends HTMLElement {
         this.innerHTML = this.template`${this}`;
     }
 
+    getTemplateHTML(){
+        this.innerHTML = this.template`${this}`;
+        return this.innerHTML;
+    }
+    generateViewLink(viewLink){
+       return viewLink.replace(/https?:\/\//,'');
+    }
     static get observedAttributes() {
         return ['type', 'size', 'heading', 'text'];
     }
@@ -132,27 +335,36 @@ class RHDPProjectItem extends HTMLElement {
             <p>
         
             </p>
-            <a class="solution-overlay-learn link-sm">Learn more</a> | <a
-                href="${project.downloadsLink}" class="link-sm">Download</a>
+            <a class="solution-overlay-learn link-sm">Learn more</a> ${project.downloadsLink ? `| <a href="${project.downloadsLink}" class="link-sm">Download</a>` : ''}
             <div class="project-content row">
                 <div class="large-6 project-content-left columns"><img
                         src="${project.imageUrl}" alt="${project.projectName}">
-                    <p><a class="upstream-download"
-                          href="${project.downloadsLink}"><i
-                            class="fa fa-download"></i> Download</a></p>
-                    <p><a href="${project.sys_url_view}">Visit home page</a></p>
-                    <ul class="project-social">
-                        <li><a href="${project.twitterLink}"><i class="fa fa-twitter"></i></a></li>
+                    <p><a class="upstream-download" href="${project.downloadsLink}"><i class="fa fa-download"></i> Download</a></p>
+                    <p>
+                        ${project.sys_url_view ? `<a href="${project.sys_url_view}">Visit home page</a>` : ''}
+                    </p>
+                    <ul class="project-social"> 
+                        ${project.twitterLink ? `<li><a href="${project.twitterLink}"><i class="fa fa-twitter"></i></a></li>` : ''}
                     </ul>
                 </div>
                 <div class="large-18 project-content-right columns"><h3><a href="${project.sys_url_view}">${project.projectName}</a>
                 </h3>
-                    <p>${project.description}</p>
+                    <p>${project.descriptions}</p>
                     <div class="upstream-more-content">
                         <ul class="project-details-list">
-                            <li>Docs: <a href="${project.docsLink}">Documentation</a></li>
-                            <li>Issue: <a href="${project.issueTracker}">github.com/dotnet/core/issues</a></li>
-                            <li>Github: <a href="${project.githubLink}">github.com/dotnet/core</a></li>
+                            ${project.docsLink ? `<li>Docs: <a href="${project.docsLink}">Documentation</a></li>` : ''}
+                            ${project.communityLink ? `<li>Community: <a href="${project.communityLink}">${project.generateViewLink(project.communityLink)}</a></li>` : ''}
+                            ${project.mailingListLink ? `<li>Mailing List: <a href="${project.mailingListLink}">${project.generateViewLink(project.mailingListLink)}</a></li>` : ''}
+                            ${project.chatLink ? `<li>Chat: <a href="${project.chatLink}">${project.generateViewLink(project.chatLink)}</a></li>` : ''}
+                            ${project.jiraLink ? `<li>JIRA: <a href="${project.jiraLink}">${project.generateViewLink(project.jiraLink)}</a></li>` : ''}
+                            ${project.srcLink ? `<li>Source: <a href="${project.srcLink}">${project.generateViewLink(project.srcLink)}</a></li>` : ''}
+                            ${project.githubLink ? `<li>Github: <a href="${project.githubLink}">${project.generateViewLink(project.githubLink)}</a></li>` : ''}
+                            ${project.buildLink ? `<li>Build: <a href="${project.buildLink}">${project.generateViewLink(project.buildLink)}</a></li>` : ''}
+                            ${project.issueTracker ? `<li>Issue: <a href="${project.issueTracker}">${project.generateViewLink(project.issueTracker)}</a></li>` : ''}
+                            ${project.userForumLink ? `<li>User Forum: <a href="${project.userForumLink}">${project.generateViewLink(project.userForumLink)}</a></li>` : ''}  
+                            ${project.devForumLink ? `<li>Dev Forum: <a href="${project.devForumLink}">${project.generateViewLink(project.devForumLink)}</a></li>` : ''}  
+                            ${project.knowledgebaseLink ? `<li>KnowledgeBase: <a href="${project.knowledgebaseLink}">${project.generateViewLink(project.knowledgebaseLink)}</a></li>` : ''} 
+                            ${project.blogLink ? `<li>Blog: <a href="${project.blogLink}">${project.generateViewLink(project.blogLink)}</a></li>` : ''} 
                         </ul>
                     </div>
                 </div>
