@@ -22,7 +22,6 @@ class RHDPProjectItem extends HTMLElement {
     private _commiterLink : String;
     private _fisheyeLink : String;
     private _viewvcLink : String;
-    private _anonymousGitLink : String;
     private _committerGitLink : String;
     private _buildLink : String;
     private _hudsonLink : String;
@@ -135,16 +134,6 @@ class RHDPProjectItem extends HTMLElement {
         value = this.getCorrectUrl(value);
         if (this._viewvcLink === value) return;
         this._viewvcLink = value;
-    }
-
-    get anonymousGitLink(): String {
-        return this._anonymousGitLink;
-    }
-
-    set anonymousGitLink(value) {
-        value = this.getCorrectUrl(value);
-        if (this._anonymousGitLink === value) return;
-        this._anonymousGitLink = value;
     }
 
     get committerGitLink(): String {
@@ -365,6 +354,7 @@ class RHDPProjectItem extends HTMLElement {
                             ${project.devForumLink ? `<li>Dev Forum: <a href="${project.devForumLink}">${project.generateViewLink(project.devForumLink)}</a></li>` : ''}  
                             ${project.knowledgebaseLink ? `<li>KnowledgeBase: <a href="${project.knowledgebaseLink}">${project.generateViewLink(project.knowledgebaseLink)}</a></li>` : ''} 
                             ${project.blogLink ? `<li>Blog: <a href="${project.blogLink}">${project.generateViewLink(project.blogLink)}</a></li>` : ''} 
+                            ${project.anonymousLink ? `<li>Anonymous Source: <a href="${project.anonymousLink}">${project.generateViewLink(project.anonymousLink)}</a></li>` : ''} 
                         </ul>
                     </div>
                 </div>

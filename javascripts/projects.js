@@ -62,7 +62,7 @@ app.project = {
     }
 
     // append loading class to wrapper
-    $("ul.results").addClass('loading');
+    // $("ul.results").addClass('loading');
     $.extend(request_data, currentFilters);
     request_data["query"] = query.join(" AND ");
 
@@ -98,6 +98,8 @@ app.project = {
       var hits = data.hits.hits;
     }
 
+    var projectList = document.querySelector('rhdp-projects');
+    projectList.data = hits;
     var html = "";
 
     // loop over every hit
@@ -109,6 +111,7 @@ app.project = {
       project.imageUrl = "https://static.jboss.org/" + (props.specialIcon || props.sys_project) + "/images/" + (props.specialIcon || props.sys_project) + "_" + thumbnailSize + ".png";
       project.downloadsLink = props.downloadsLink;
       project.projectName = props.sys_project_name;
+      project.sys_url_view = props.sys_url_view;
       project.descriptions = props.description;
       project.docsLink = props.docsLink;
       project.communityLink = props.communityLink;
@@ -126,19 +129,19 @@ app.project = {
       project.fisheyeLink = props.fisheyeLink;
       project.viewvcLink = props.viewvcLink;
       project.githubLink = props.githubLink;
-      project.anonymousGitLink = props.anonymousGitLink;
       project.committerGitLink = props.committerGitLink;
       project.buildLink = props.buildLink;
       project.hudsonLink = props.hudsonLink;
 
-      html += project.getTemplateHTML();
+      projectList.querySelector('ul.results').appendChild(project);
+      // html += project.getTemplateHTML();
     }
-
+    projectList.loading = false;
     // Inject HTML into the DO<
-    if(!html) {
-      html = "Sorry, no results to display. Please modify your search.";
-    }
-    container.html(html).removeClass('loading');
+    // if(!html) {
+    //   html = "Sorry, no results to display. Please modify your search.";
+    // }
+    // container.html(html).removeClass('loading');
     container.prev().find("#results-label").html(hits.length);
 
   }

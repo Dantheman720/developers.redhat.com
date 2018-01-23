@@ -1580,7 +1580,7 @@ var RHDPProjectItem = /** @class */ (function (_super) {
     function RHDPProjectItem() {
         var _this = _super.call(this) || this;
         _this.template = function (strings, project) {
-            return "\n        <li class=\"upstream\">\n            <div class=\"defaultprojectimage\">\n                <p class=\"image-link\"><img src=\"" + project.imageUrl + "\" alt=\"" + project.projectName + "\"></p></div>\n            <h5 class=\"solution-name\">\n                <p class=\"solution-name-link\">" + project.projectName + "</p>\n            </h5>\n            <p>\n        \n            </p>\n            <a class=\"solution-overlay-learn link-sm\">Learn more</a> | <a\n                href=\"" + project.downloadsLink + "\" class=\"link-sm\">Download</a>\n            <div class=\"project-content row\">\n                <div class=\"large-6 project-content-left columns\"><img\n                        src=\"" + project.imageUrl + "\" alt=\"" + project.projectName + "\">\n                    <p><a class=\"upstream-download\"\n                          href=\"" + project.downloadsLink + "\"><i\n                            class=\"fa fa-download\"></i> Download</a></p>\n                    <p><a href=\"" + project.sys_url_view + "\">Visit home page</a></p>\n                    <ul class=\"project-social\">\n                        <li><a href=\"" + project.twitterLink + "\"><i class=\"fa fa-twitter\"></i></a></li>\n                    </ul>\n                </div>\n                <div class=\"large-18 project-content-right columns\"><h3><a href=\"" + project.sys_url_view + "\">" + project.projectName + "</a>\n                </h3>\n                    <p>" + project.descriptions + "</p>\n                    <div class=\"upstream-more-content\">\n                        <ul class=\"project-details-list\">\n                            " + (project.docsLink ? "<li>Docs: <a href=\"" + project.docsLink + "\">Documentation</a></li>" : '') + "\n                            " + (project.communityLink ? "<li>Community: <a href=\"" + project.communityLink + "\">" + project.generateViewLink(project.communityLink) + "</a></li>" : '') + "\n                            " + (project.mailingListLink ? "<li>Mailing List: <a href=\"" + project.mailingListLink + "\">" + project.generateViewLink(project.mailingListLink) + "</a></li>" : '') + "\n                            " + (project.chatLink ? "<li>Chat: <a href=\"" + project.chatLink + "\">" + project.generateViewLink(project.chatLink) + "</a></li>" : '') + "\n                            " + (project.jiraLink ? "<li>JIRA: <a href=\"" + project.jiraLink + "\">" + project.generateViewLink(project.jiraLink) + "</a></li>" : '') + "\n                            " + (project.srcLink ? "<li>Source: <a href=\"" + project.srcLink + "\">" + project.generateViewLink(project.srcLink) + "</a></li>" : '') + "\n                            " + (project.githubLink ? "<li>Github: <a href=\"" + project.githubLink + "\">" + project.generateViewLink(project.githubLink) + "</a></li>" : '') + "\n                            " + (project.buildLink ? "<li>Build: <a href=\"" + project.buildLink + "\">" + project.generateViewLink(project.buildLink) + "</a></li>" : '') + "\n                            " + (project.issueTracker ? "<li>Issue: <a href=\"" + project.issueTracker + "\">" + project.generateViewLink(project.issueTracker) + "</a></li>" : '') + "\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </li>";
+            return "\n        <li class=\"upstream\">\n            <div class=\"defaultprojectimage\">\n                <p class=\"image-link\"><img src=\"" + project.imageUrl + "\" alt=\"" + project.projectName + "\"></p></div>\n            <h5 class=\"solution-name\">\n                <p class=\"solution-name-link\">" + project.projectName + "</p>\n            </h5>\n            <p>\n        \n            </p>\n            <a class=\"solution-overlay-learn link-sm\">Learn more</a> " + (project.downloadsLink ? "| <a href=\"" + project.downloadsLink + "\" class=\"link-sm\">Download</a>" : '') + "\n            <div class=\"project-content row\">\n                <div class=\"large-6 project-content-left columns\"><img\n                        src=\"" + project.imageUrl + "\" alt=\"" + project.projectName + "\">\n                    <p><a class=\"upstream-download\" href=\"" + project.downloadsLink + "\"><i class=\"fa fa-download\"></i> Download</a></p>\n                    <p>\n                        " + (project.sys_url_view ? "<a href=\"" + project.sys_url_view + "\">Visit home page</a>" : '') + "\n                    </p>\n                    <ul class=\"project-social\"> \n                        " + (project.twitterLink ? "<li><a href=\"" + project.twitterLink + "\"><i class=\"fa fa-twitter\"></i></a></li>" : '') + "\n                    </ul>\n                </div>\n                <div class=\"large-18 project-content-right columns\"><h3><a href=\"" + project.sys_url_view + "\">" + project.projectName + "</a>\n                </h3>\n                    <p>" + project.descriptions + "</p>\n                    <div class=\"upstream-more-content\">\n                        <ul class=\"project-details-list\">\n                            " + (project.docsLink ? "<li>Docs: <a href=\"" + project.docsLink + "\">Documentation</a></li>" : '') + "\n                            " + (project.communityLink ? "<li>Community: <a href=\"" + project.communityLink + "\">" + project.generateViewLink(project.communityLink) + "</a></li>" : '') + "\n                            " + (project.mailingListLink ? "<li>Mailing List: <a href=\"" + project.mailingListLink + "\">" + project.generateViewLink(project.mailingListLink) + "</a></li>" : '') + "\n                            " + (project.chatLink ? "<li>Chat: <a href=\"" + project.chatLink + "\">" + project.generateViewLink(project.chatLink) + "</a></li>" : '') + "\n                            " + (project.jiraLink ? "<li>JIRA: <a href=\"" + project.jiraLink + "\">" + project.generateViewLink(project.jiraLink) + "</a></li>" : '') + "\n                            " + (project.srcLink ? "<li>Source: <a href=\"" + project.srcLink + "\">" + project.generateViewLink(project.srcLink) + "</a></li>" : '') + "\n                            " + (project.githubLink ? "<li>Github: <a href=\"" + project.githubLink + "\">" + project.generateViewLink(project.githubLink) + "</a></li>" : '') + "\n                            " + (project.buildLink ? "<li>Build: <a href=\"" + project.buildLink + "\">" + project.generateViewLink(project.buildLink) + "</a></li>" : '') + "\n                            " + (project.issueTracker ? "<li>Issue: <a href=\"" + project.issueTracker + "\">" + project.generateViewLink(project.issueTracker) + "</a></li>" : '') + "\n                            " + (project.userForumLink ? "<li>User Forum: <a href=\"" + project.userForumLink + "\">" + project.generateViewLink(project.userForumLink) + "</a></li>" : '') + "  \n                            " + (project.devForumLink ? "<li>Dev Forum: <a href=\"" + project.devForumLink + "\">" + project.generateViewLink(project.devForumLink) + "</a></li>" : '') + "  \n                            " + (project.knowledgebaseLink ? "<li>KnowledgeBase: <a href=\"" + project.knowledgebaseLink + "\">" + project.generateViewLink(project.knowledgebaseLink) + "</a></li>" : '') + " \n                            " + (project.blogLink ? "<li>Blog: <a href=\"" + project.blogLink + "\">" + project.generateViewLink(project.blogLink) + "</a></li>" : '') + " \n                            " + (project.anonymousLink ? "<li>Anonymous Source: <a href=\"" + project.anonymousLink + "\">" + project.generateViewLink(project.anonymousLink) + "</a></li>" : '') + " \n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </li>";
         };
         return _this;
     }
@@ -1723,19 +1723,6 @@ var RHDPProjectItem = /** @class */ (function (_super) {
             if (this._viewvcLink === value)
                 return;
             this._viewvcLink = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RHDPProjectItem.prototype, "anonymousGitLink", {
-        get: function () {
-            return this._anonymousGitLink;
-        },
-        set: function (value) {
-            value = this.getCorrectUrl(value);
-            if (this._anonymousGitLink === value)
-                return;
-            this._anonymousGitLink = value;
         },
         enumerable: true,
         configurable: true
@@ -1961,6 +1948,63 @@ var RHDPProjectItem = /** @class */ (function (_super) {
 }(HTMLElement));
 window.addEventListener('WebComponentsReady', function () {
     customElements.define('rhdp-project-item', RHDPProjectItem);
+});
+var RHDPProjects = /** @class */ (function (_super) {
+    __extends(RHDPProjects, _super);
+    function RHDPProjects() {
+        var _this = _super.call(this) || this;
+        _this._loading = true;
+        _this.template = function (strings, project) {
+            return "\n\n        <ul class=\"small-block-grid-2 large-block-grid-4 medium-block-grid-3 results " + (project.loading == true ? 'loading' : '') + "\"></ul>\n        \n        ";
+        };
+        return _this;
+    }
+    Object.defineProperty(RHDPProjects.prototype, "loading", {
+        get: function () {
+            return this._loading;
+        },
+        set: function (value) {
+            if (value == false) {
+                this.querySelector('ul.results').classList.remove('loading');
+            }
+            else {
+                this.querySelector('ul.results').classList.add('loading');
+            }
+            this._loading = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjects.prototype, "data", {
+        get: function () {
+            return this._data;
+        },
+        set: function (value) {
+            this._data = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjects.prototype.connectedCallback = function () {
+        this.innerHTML = (_a = ["", ""], _a.raw = ["", ""], this.template(_a, this));
+        var _a;
+    };
+    Object.defineProperty(RHDPProjects, "observedAttributes", {
+        get: function () {
+            return ['loading'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjects.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
+        this[name] = newVal;
+        this.innerHTML = (_a = ["", ""], _a.raw = ["", ""], this.template(_a, this));
+        var _a;
+    };
+    return RHDPProjects;
+}(HTMLElement));
+window.addEventListener('WebComponentsReady', function () {
+    customElements.define('rhdp-projects', RHDPProjects);
 });
 var RHDPSearchBox = /** @class */ (function (_super) {
     __extends(RHDPSearchBox, _super);
