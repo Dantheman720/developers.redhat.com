@@ -1575,6 +1575,89 @@ customElements.define('rhdp-downloads-popular-product', RHDPDownloadsPopularProd
 customElements.define('rhdp-downloads-popular-products', RHDPDownloadsPopularProducts);
 customElements.define('rhdp-downloads-products', RHDPDownloadsProducts);
 customElements.define('rhdp-downloads-app', RHDPDownloadsApp);
+var RHDPProjectFilterBox = /** @class */ (function (_super) {
+    __extends(RHDPProjectFilterBox, _super);
+    function RHDPProjectFilterBox() {
+        var _this = _super.call(this) || this;
+        _this._term = '';
+        _this._filter = '';
+        _this.template = function (strings, project) {
+            return "\n        <form action=\"\" class=\"project-filters\" method=\"GET\" data-drupal-form-fields=\"\">\n            <h4>Filters<a class=\"project-filters-clear\" href=\"#\">Clear All Filters</a></h4>\n            <input name=\"filter-text\" placeholder=\"Filter by keyword\" type=\"text\" value=\"" + project.term + "\">\n            <div class=\"filter-block\">\n                <h5>Included In</h5>\n        \n                <div class=\"styled-select\"><select name=\"filter-products\">\n                    <option value=\"\">Select Product...</option>\n                    <option value=\"amq\">Red Hat JBoss AMQ</option>\n                    <option value=\"bpmsuite\">Red Hat JBoss BPM Suite</option>\n                    <option value=\"brms\">Red Hat JBoss BRMS</option>\n                    <option value=\"datagrid\">Red Hat JBoss Data Grid</option>\n                    <option value=\"datavirt\">Red Hat JBoss Data Virtualization</option>\n                    <option value=\"devstudio\">Red Hat JBoss Developer Studio</option>\n                    <option value=\"eap\">Red Hat JBoss Enterprise Application Platform</option>\n                    <option value=\"fuse\">Red Hat JBoss Fuse</option>\n                    <option value=\"rhel\">Red Hat Enterprise Linux</option>\n                    <option value=\"webserver\">Red Hat JBoss Web Server</option>\n                </select></div>\n            </div>\n        </form>\n";
+        };
+        return _this;
+    }
+    Object.defineProperty(RHDPProjectFilterBox.prototype, "filter", {
+        get: function () {
+            return this._filter;
+        },
+        set: function (value) {
+            if (this._filter === value)
+                return;
+            this._filter = decodeURI(value);
+            this.querySelector('select[name="filter-products"]').setAttribute('value', this.filter);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectFilterBox.prototype, "term", {
+        get: function () {
+            return this._term;
+        },
+        set: function (value) {
+            if (this._term === value)
+                return;
+            this._term = decodeURI(value);
+            this.querySelector('input').setAttribute('value', this.term);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectFilterBox.prototype.connectedCallback = function () {
+        var _this = this;
+        this.innerHTML = (_a = ["", ""], _a.raw = ["", ""], this.template(_a, this));
+        this.addEventListener('keyup', function (e) {
+            e.preventDefault();
+            _this._termChange(e);
+        });
+        this.querySelector('select[name="filter-products"]').addEventListener('change', function (e) {
+            e.preventDefault();
+            _this._filterChange(e);
+        });
+        var _a;
+    };
+    RHDPProjectFilterBox.prototype._filterChange = function (e) {
+        this.filter = e.currentTarget.value;
+        this.dispatchEvent(new CustomEvent('project-filter-change', {
+            detail: {
+                filter: this.filter
+            },
+            bubbles: true
+        }));
+    };
+    RHDPProjectFilterBox.prototype._termChange = function (e) {
+        this.term = this.querySelector('input').value;
+        this.dispatchEvent(new CustomEvent('project-term-change', {
+            detail: {
+                term: this.term
+            },
+            bubbles: true
+        }));
+    };
+    Object.defineProperty(RHDPProjectFilterBox, "observedAttributes", {
+        get: function () {
+            return ['loading'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectFilterBox.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
+        this[name] = newVal;
+    };
+    return RHDPProjectFilterBox;
+}(HTMLElement));
+window.addEventListener('WebComponentsReady', function () {
+    customElements.define('rhdp-project-filter-box', RHDPProjectFilterBox);
+});
 var RHDPProjectItem = /** @class */ (function (_super) {
     __extends(RHDPProjectItem, _super);
     function RHDPProjectItem() {
@@ -1949,6 +2032,199 @@ var RHDPProjectItem = /** @class */ (function (_super) {
 window.addEventListener('WebComponentsReady', function () {
     customElements.define('rhdp-project-item', RHDPProjectItem);
 });
+var RHDPProjectQuery = /** @class */ (function (_super) {
+    __extends(RHDPProjectQuery, _super);
+    function RHDPProjectQuery() {
+        var _this = _super.call(this) || this;
+        _this._dcpUrl = 'https://dcp2.jboss.org/v2/rest/search/suggest_project_name_ngram_more_fields?sort=sys_title&query=';
+        _this._term = '';
+        // TODO: Fix this ugly hack. Add upstream projects to products once Drupal REST endpoints are exposed.
+        _this.productData = {
+            "amq": { "upstream": ["activemq", "fabric8"] },
+            "bpmsuite": { "upstream": ["drools", "guvnor", "optaplanner", "jbpm"] },
+            "brms": { "upstream": ["optaplanner", "drools", "guvnor"] },
+            "datagrid": { "upstream": ["infinispan", "jgroups", "hibernate_subprojects_search"] },
+            "datavirt": { "upstream": ["teiid", "teiiddesigner", "modeshape"] },
+            "devstudio": { "upstream": ["jbosstools"] },
+            "eap": { "upstream": ["wildfly", "jgroups", "hibernate", "hornetq", "jbossclustering", "jbossmc", "narayana", "jbossweb", "jbossws", "ironjacamar", "jgroups", "mod_cluster", "jbossas_osgi", "jbosssso", "picketlink", "resteasy", "weld", "wise", "xnio"] },
+            "fuse": { "upstream": ["camel", "karaf", "activemq", "cxf", "fabric8", "switchyard", "hawtio"] },
+            "rhel": { "upstream": ["fedora"] },
+            "webserver": { "upstream": ["tomcat", "httpd", "mod_cluster"] },
+        };
+        _this._filterChange = _this._filterChange.bind(_this);
+        _this._termChange = _this._termChange.bind(_this);
+        return _this;
+    }
+    Object.defineProperty(RHDPProjectQuery.prototype, "term", {
+        get: function () {
+            return this._term;
+        },
+        set: function (value) {
+            this._term = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectQuery.prototype, "filter", {
+        get: function () {
+            return this._filter;
+        },
+        set: function (value) {
+            this._filter = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectQuery.prototype, "dcpUrl", {
+        get: function () {
+            return this._dcpUrl;
+        },
+        set: function (value) {
+            this._dcpUrl = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectQuery.prototype, "data", {
+        get: function () {
+            return this._data;
+        },
+        set: function (value) {
+            this._data = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectQuery.prototype.connectedCallback = function () {
+        top.addEventListener('project-filter-change', this._filterChange);
+        top.addEventListener('project-term-change', this._termChange);
+        this.doSearch();
+    };
+    RHDPProjectQuery.prototype.doSearch = function () {
+        var _this = this;
+        console.log("You are now in the rhdp-project-query : doSearch function");
+        this.dispatchEvent(new CustomEvent('result-start', { bubbles: true }));
+        var qUrl = new URL(this.dcpUrl);
+        qUrl.searchParams.set('sort', 'sys_title');
+        qUrl.searchParams.set('query', this.term);
+        if (this.filter) {
+            var upstreamProjects = this.productData[this.filter]['upstream'];
+            for (var i = 0; i < upstreamProjects.length; i++) {
+                qUrl.searchParams.append('project', upstreamProjects[i]);
+            }
+        }
+        fetch(qUrl.toString())
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) {
+            _this.data = data;
+            _this.dispatchEvent(new CustomEvent('data-results-complete', {
+                detail: {
+                    data: _this.data,
+                    term: _this.term,
+                    filter: _this.filter
+                },
+                bubbles: true
+            }));
+        });
+    };
+    RHDPProjectQuery.prototype._termChange = function (e) {
+        console.log("HEY FUCKER! this is your term! " + e.detail.term);
+        if (e.detail && e.detail.term) {
+            this.term = e.detail.term;
+        }
+        this.doSearch();
+    };
+    RHDPProjectQuery.prototype._filterChange = function (e) {
+        console.log("HEY FUCKER! this is your FILTER! " + e.detail.filter);
+        if (e.detail && e.detail.filter) {
+            this.filter = e.detail.filter;
+        }
+        this.doSearch();
+    };
+    Object.defineProperty(RHDPProjectQuery, "observedAttributes", {
+        get: function () {
+            return ['loading'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectQuery.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
+        this[name] = newVal;
+    };
+    return RHDPProjectQuery;
+}(HTMLElement));
+window.addEventListener('WebComponentsReady', function () {
+    customElements.define('rhdp-project-query', RHDPProjectQuery);
+});
+var RHDPProjectURL = /** @class */ (function (_super) {
+    __extends(RHDPProjectURL, _super);
+    function RHDPProjectURL() {
+        var _this = _super.call(this) || this;
+        _this._uri = new URL(window.location.href); // https://developers.redhat.com/search/?q=term+term1+term2&f=a+b+c&s=sort&r=100
+        _this._updateURI = _this._updateURI.bind(_this);
+        return _this;
+    }
+    Object.defineProperty(RHDPProjectURL.prototype, "uri", {
+        get: function () {
+            return this._uri;
+        },
+        set: function (value) {
+            this._uri = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectURL.prototype, "term", {
+        get: function () {
+            return this._term;
+        },
+        set: function (value) {
+            if (value.length > 0) {
+                this.uri.searchParams.set('filter-text', value);
+            }
+            this._term = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RHDPProjectURL.prototype, "filters", {
+        get: function () {
+            return this._filters;
+        },
+        set: function (value) {
+            if (value.length > 0) {
+                this.uri.searchParams.set('filter-product', value);
+            }
+            this._filters = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectURL.prototype.connectedCallback = function () {
+        top.addEventListener('data-results-complete', this._updateURI);
+    };
+    RHDPProjectURL.prototype._updateURI = function (e) {
+        if (e.detail.term || e.detail.filter) {
+            this.term = e.detail.term ? e.detail.term : '';
+            this.filters = e.detail.filter ? e.detail.filter : '';
+            history.pushState({}, 'RHDP Projects:', "" + this.uri.pathname + (this.uri.searchParams ? "#!" + this.uri.searchParams : ''));
+        }
+    };
+    Object.defineProperty(RHDPProjectURL, "observedAttributes", {
+        get: function () {
+            return ['loading'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RHDPProjectURL.prototype.attributeChangedCallback = function (name, oldVal, newVal) {
+        this[name] = newVal;
+    };
+    return RHDPProjectURL;
+}(HTMLElement));
+window.addEventListener('WebComponentsReady', function () {
+    customElements.define('rhdp-project-url', RHDPProjectURL);
+});
 var RHDPProjects = /** @class */ (function (_super) {
     __extends(RHDPProjects, _super);
     function RHDPProjects() {
@@ -1964,6 +2240,7 @@ var RHDPProjects = /** @class */ (function (_super) {
             return this._loading;
         },
         set: function (value) {
+            // Set the css for the loading symbol
             if (value == false) {
                 this.querySelector('ul.results').classList.remove('loading');
             }
@@ -1987,11 +2264,67 @@ var RHDPProjects = /** @class */ (function (_super) {
     });
     RHDPProjects.prototype.connectedCallback = function () {
         this.innerHTML = (_a = ["", ""], _a.raw = ["", ""], this.template(_a, this));
+        this.addEventListener('data-results-complete', this._loadDataResult);
+        var query = new RHDPProjectQuery();
+        var url = new RHDPProjectURL();
+        this.appendChild(query);
+        this.appendChild(url);
         var _a;
+    };
+    RHDPProjects.prototype.removeAllProjects = function () {
+        var childNodes = this.querySelector('ul.results');
+        while (childNodes.firstChild) {
+            childNodes.removeChild(childNodes.firstChild);
+        }
+    };
+    RHDPProjects.prototype._loadDataResult = function (e) {
+        this.removeAllProjects();
+        this.loading = true;
+        console.log("You are now in rhdp-projects : _loadDataResult() function");
+        if (e.detail && e.detail.data) {
+            var hits = void 0;
+            if (e.detail.data.responses) {
+                hits = e.detail.data.responses[0].hits.hits;
+            }
+            else {
+                hits = e.detail.data.hits.hits;
+            }
+            for (var i = 0; i < hits.length; i++) {
+                var project = new RHDPProjectItem();
+                var props = hits[i].fields;
+                var thumbnailSize = "200x150";
+                project.imageUrl = "https://static.jboss.org/" + (props.specialIcon || props.sys_project) + "/images/" + (props.specialIcon || props.sys_project) + "_" + thumbnailSize + ".png";
+                project.downloadsLink = props.downloadsLink;
+                project.projectName = props.sys_project_name;
+                project.sys_url_view = props.sys_url_view;
+                project.descriptions = props.description;
+                project.docsLink = props.docsLink;
+                project.communityLink = props.communityLink;
+                project.knowledgebaseLink = props.knowledgeBaseLink;
+                project.userForumLink = props.userForumLink;
+                project.devForumLink = props.devForumLink;
+                project.mailingListLink = props.mailingListLink;
+                project.chatLink = props.chatLink;
+                project.blogLink = props.blogLink;
+                project.issueTracker = props.issueTrackerLink;
+                project.jiraLink = props.jiraLink;
+                project.srcLink = props.srcLink;
+                project.anonymousLink = props.anonymousLink;
+                project.commiterLink = props.commiterLink;
+                project.fisheyeLink = props.fisheyeLink;
+                project.viewvcLink = props.viewvcLink;
+                project.githubLink = props.githubLink;
+                project.committerGitLink = props.committerGitLink;
+                project.buildLink = props.buildLink;
+                project.hudsonLink = props.hudsonLink;
+                this.querySelector('ul.results').appendChild(project);
+            }
+            this.loading = false;
+        }
     };
     Object.defineProperty(RHDPProjects, "observedAttributes", {
         get: function () {
-            return ['loading'];
+            return [''];
         },
         enumerable: true,
         configurable: true
