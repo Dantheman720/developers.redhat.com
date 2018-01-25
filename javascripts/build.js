@@ -1582,7 +1582,7 @@ var RHDPProjectFilterBox = /** @class */ (function (_super) {
         _this._term = '';
         _this._filter = '';
         _this.template = function (strings, project) {
-            return "\n        <form action=\"\" class=\"project-filters\" method=\"GET\" data-drupal-form-fields=\"\">\n            <h4>Filters<a class=\"project-filters-clear\" href=\"#\">Clear All Filters</a></h4>\n            <input name=\"filter-text\" placeholder=\"Filter by keyword\" type=\"text\" value=\"" + project.term + "\">\n            <div class=\"filter-block\">\n                <h5>Included In</h5>\n        \n                <div class=\"styled-select\"><select name=\"filter-products\">\n                    <option value=\"\">Select Product...</option>\n                    <option value=\"amq\">Red Hat JBoss AMQ</option>\n                    <option value=\"bpmsuite\">Red Hat JBoss BPM Suite</option>\n                    <option value=\"brms\">Red Hat JBoss BRMS</option>\n                    <option value=\"datagrid\">Red Hat JBoss Data Grid</option>\n                    <option value=\"datavirt\">Red Hat JBoss Data Virtualization</option>\n                    <option value=\"devstudio\">Red Hat JBoss Developer Studio</option>\n                    <option value=\"eap\">Red Hat JBoss Enterprise Application Platform</option>\n                    <option value=\"fuse\">Red Hat JBoss Fuse</option>\n                    <option value=\"rhel\">Red Hat Enterprise Linux</option>\n                    <option value=\"webserver\">Red Hat JBoss Web Server</option>\n                </select></div>\n            </div>\n        </form>\n";
+            return "\n        <form action=\"\" class=\"project-filters\" method=\"GET\" data-drupal-form-fields=\"\">\n            <h4>Filters<a class=\"project-filters-clear\" href=\"#\">Clear All Filters</a></h4>\n            <input name=\"filter-text\" placeholder=\"Filter by keyword\" type=\"text\" value=\"" + project.term + "\">\n            <div class=\"filter-block\">\n                <h5>Included In</h5>\n        \n                <div class=\"styled-select\" ><select name=\"filter-products\" id=\"upstream-project-selection\">\n                    <option value=\"\">Select Product...</option>\n                    <option value=\"amq\">Red Hat JBoss AMQ</option>\n                    <option value=\"bpmsuite\">Red Hat JBoss BPM Suite</option>\n                    <option value=\"brms\">Red Hat JBoss BRMS</option>\n                    <option value=\"datagrid\">Red Hat JBoss Data Grid</option>\n                    <option value=\"datavirt\">Red Hat JBoss Data Virtualization</option>\n                    <option value=\"devstudio\">Red Hat JBoss Developer Studio</option>\n                    <option value=\"eap\">Red Hat JBoss Enterprise Application Platform</option>\n                    <option value=\"fuse\">Red Hat JBoss Fuse</option>\n                    <option value=\"rhel\">Red Hat Enterprise Linux</option>\n                    <option value=\"webserver\">Red Hat JBoss Web Server</option>\n                </select></div>\n            </div>\n        </form>\n";
         };
         return _this;
     }
@@ -1591,10 +1591,14 @@ var RHDPProjectFilterBox = /** @class */ (function (_super) {
             return this._filter;
         },
         set: function (value) {
-            if (this._filter === value)
-                return;
             this._filter = decodeURI(value);
-            this.querySelector('select[name="filter-products"]').setAttribute('value', this.filter);
+            var filterAttrib = this.querySelector('select[name="filter-products"]');
+            if (value === "") {
+                filterAttrib.selectedIndex = 0;
+            }
+            else {
+                filterAttrib.setAttribute('value', this.filter);
+            }
         },
         enumerable: true,
         configurable: true
@@ -1604,8 +1608,6 @@ var RHDPProjectFilterBox = /** @class */ (function (_super) {
             return this._term;
         },
         set: function (value) {
-            if (this._term === value)
-                return;
             this._term = decodeURI(value);
             this.querySelector('input').setAttribute('value', this.term);
         },
@@ -1623,7 +1625,16 @@ var RHDPProjectFilterBox = /** @class */ (function (_super) {
             e.preventDefault();
             _this._filterChange(e);
         });
+        this.querySelector('.project-filters-clear').addEventListener('click', function (e) {
+            e.preventDefault();
+            _this._clearFilters(e);
+        });
         var _a;
+    };
+    RHDPProjectFilterBox.prototype._clearFilters = function (e) {
+        e.preventDefault();
+        this.filter = "";
+        this.term = "";
     };
     RHDPProjectFilterBox.prototype._filterChange = function (e) {
         this.filter = e.currentTarget.value;

@@ -8,9 +8,14 @@ class RHDPProjectFilterBox extends HTMLElement {
     }
 
     set filter(value: string) {
-        if (this._filter === value) return;
         this._filter = decodeURI(value);
-        this.querySelector('select[name="filter-products"]').setAttribute('value', this.filter);
+        let filterAttrib = this.querySelector('select[name="filter-products"]') as any;
+        if(value === ""){
+            filterAttrib.selectedIndex = 0;
+        }else{
+            filterAttrib.setAttribute('value', this.filter);
+
+        }
     }
 
     get term(): string {
@@ -18,7 +23,6 @@ class RHDPProjectFilterBox extends HTMLElement {
     }
 
     set term(value: string) {
-        if (this._term === value) return;
         this._term = decodeURI(value);
         this.querySelector('input').setAttribute('value', this.term);
     }
@@ -37,8 +41,18 @@ class RHDPProjectFilterBox extends HTMLElement {
             e.preventDefault();
             this._filterChange(e);
         })
+        this.querySelector('.project-filters-clear').addEventListener('click', e => {
+            e.preventDefault();
+            this._clearFilters(e);
+        })
     }
 
+
+    _clearFilters(e){
+        e.preventDefault();
+        this.filter = "";
+        this.term = "";
+    }
 
     _filterChange(e){
         this.filter = e.currentTarget.value;
@@ -76,7 +90,7 @@ class RHDPProjectFilterBox extends HTMLElement {
             <div class="filter-block">
                 <h5>Included In</h5>
         
-                <div class="styled-select"><select name="filter-products">
+                <div class="styled-select" ><select name="filter-products" id="upstream-project-selection">
                     <option value="">Select Product...</option>
                     <option value="amq">Red Hat JBoss AMQ</option>
                     <option value="bpmsuite">Red Hat JBoss BPM Suite</option>
